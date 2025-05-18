@@ -113,15 +113,19 @@ public class LinearProbingHashMap<T1, T2> {
 
     // returns all keys sorted by their associated values (largest first)
     public Iterable<T1> keys(Comparator<T2> cmp) {
-    List<T1> list = new ArrayList<>();
-    for (T1 key : keys) {
-        if (key != null) list.add(key);
-    }
-    Collections.sort(list, new Comparator<T1>() {
-        public int compare(T1 k1, T1 k2) {
-            return cmp.compare(get(k2), get(k1));
+        List<T1> list = new ArrayList<>();
+        for (T1 key : keys) {
+            if (key != null) {
+                list.add(key);
+            }
         }
-     }); 
+        Collections.sort(list, new Comparator<T1>() {
+            public int compare(T1 k1, T1 k2) {
+                T2 v1 = get(k1);
+                T2 v2 = get(k2);
+                return cmp.compare(v2, v1);
+            }
+        });
         return list;
     }
 
